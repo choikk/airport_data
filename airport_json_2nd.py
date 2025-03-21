@@ -113,6 +113,7 @@ os.makedirs(output_dir, exist_ok=True)
 
 # Group by first and second letter
 grouped_by_first = {}
+filenames = []
 
 for code, coords in airport_data.items():
     if not code or len(code) < 2:
@@ -135,6 +136,8 @@ for first_letter, second_groups in grouped_by_first.items():
     if estimated_total_kb <= MAX_FILE_SIZE_KB:
         # ✅ Small enough to be a single file
         filename = f"airport_data_{first_letter}_48_90.json"
+        filenames.append(filename)
+
         with open(os.path.join(output_dir, filename), "w") as f:
 #            json.dump(all_codes, f, indent=2)
             json.dump(all_codes, f, separators=(",", ":"))  # Minified version
@@ -155,6 +158,8 @@ for first_letter, second_groups in grouped_by_first.items():
         if new_size_kb > MAX_FILE_SIZE_KB and current_chunk:
             # Write previous chunk
             filename = f"airport_data_{first_letter}_{current_range_start}_{current_range_end}.json"
+            filenames.append(filename)
+
             with open(os.path.join(output_dir, filename), "w") as f:
             #    json.dump(current_chunk, f, indent=2)
                 json.dump(current_chunk, f, separators=(",", ":"))  # Minified version
@@ -173,9 +178,14 @@ for first_letter, second_groups in grouped_by_first.items():
     # Final chunk
     if current_chunk:
         filename = f"airport_data_{first_letter}_{current_range_start}_{current_range_end}.json"
+        filenames.append(filename)
+
         with open(os.path.join(output_dir, filename), "w") as f:
         #    json.dump(current_chunk, f, indent=2)
             json.dump(current_chunk, f, separators=(",", ":"))  # Minified version
         print(f"✅ Wrote {filename} ({len(current_chunk)} codes)")
 
+manifest_path = os.path.join(output_dir, "filenames.json")
+with open(manifest_path, "w") as f:
+    json.dump(filenames, f, indent=2)
 
