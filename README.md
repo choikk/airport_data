@@ -1,6 +1,7 @@
 # ✈️ airport_data
 
 This project parses airport and navigation waypoint data from FAA NASR 28-day subscription CSV files and outputs them as optimized JSON files.
+Data from https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/
 
 ## 📦 Purpose
 
