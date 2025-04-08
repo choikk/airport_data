@@ -1,5 +1,6 @@
 #
 # Check https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/ regularly and update your data as needed.
+# Currently, xc_planner/xc_airport_json.py is downloading the CURRENT data and place it in the location.
 #
 # pilot.DrChoi@gmail.com Kevin Choi  Copyright 2025
 #
@@ -9,7 +10,7 @@ import pandas as pd
 import json
 
 # ✅ Set your path correctly
-path = "/Users/kchoi/Workspace/airport_json/28DaySubscription_Effective_2025-03-20/CSV_Data/20_Mar_2025_CSV"
+path = "./28DaySubscription_Effective_/CSV_Data"
 
 # ✅ Define column indices for each CSV file
 csv_files = {
